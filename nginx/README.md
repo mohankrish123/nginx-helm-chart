@@ -1,3 +1,9 @@
+# Repository information
+This repository created the `nginx` webserver which routes the traffic on the below paths:
+- `/app/red`
+- `/app/yellow`
+
+# Resources created
 This repository creates the following kubernetes resources:
 - `nginx` namespace
 - `nginx-deployment` deployment
