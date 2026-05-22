@@ -1,12 +1,66 @@
-# Default values for nginx.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-namespace: nginx
-
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: nginx
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+namespace:
+  create: false
+  name: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+containerPort: 80
+
+podSecurityContext:
+  runAsNonRoot: false
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: nginx.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 64Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

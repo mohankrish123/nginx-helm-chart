@@ -1,0 +1,27 @@
+{{ include "nginx.fullname" . }} has been deployed.
+
+{{- if .Values.ingress.enabled }}
+
+Access the application via:
+{{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+{{- end }}
+
+{{- else if contains "LoadBalancer" .Values.service.type }}
+
+Get the external IP:
+  kubectl get svc {{ include "nginx.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+
+{{- else if contains "ClusterIP" .Values.service.type }}
+
+Port forward to access the application:
+  kubectl port-forward svc/{{ include "nginx.fullname" . }} {{ .Values.service.port }}:{{ .Values.service.port }}
+
+Then visit: http://localhost:{{ .Values.service.port }}
+
+{{- end }}
+
+Sample routes:
+  /app/red    - Red themed page
+  /app/yellow - Yellow themed page
+  /healthz    - Health check endpoint
