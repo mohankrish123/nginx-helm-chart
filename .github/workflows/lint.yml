@@ -1,0 +1,37 @@
+# name: Helm Lint
+#
+# on:
+#   pull_request:
+#     paths:
+#       - 'templates/**'
+#       - 'Chart.yaml'
+#       - 'values.yaml'
+#
+# jobs:
+#   lint:
+#     name: Helm Lint & Template
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#
+#       - name: Set up Helm
+#         uses: azure/setup-helm@v4
+#         with:
+#           version: v3.17.0
+#
+#       - name: Helm lint
+#         run: helm lint .
+#
+#       - name: Helm template (default values)
+#         run: helm template test-release .
+#
+#       - name: Helm template (with ingress)
+#         run: |
+#           helm template test-release . \
+#             --set ingress.enabled=true \
+#             --set ingress.className=alb
+#
+#       - name: Helm template (with HPA)
+#         run: |
+#           helm template test-release . \
+#             --set autoscaling.enabled=true
